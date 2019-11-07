@@ -1,9 +1,9 @@
 {
-  "name": "node-chartjs",
-  "version": "0.0.7",
+  "name": "node-chartjs-v12",
+  "version": "1.0.0",
   "description": "Chart.js on the server in Node.js",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "repository": {
     "type": "git",
@@ -25,14 +25,14 @@
   "author": "Jack Tuck",
   "license": "MIT",
   "dependencies": {
-    "canvas": "2.0.0-alpha.2",
-    "jsdom": "^11.6.2"
+    "canvas": "2.6.0",
+    "jsdom": "^15.2.1"
   },
   "devDependencies": {
-    "chart.js": "2.4.0",
-    "opn": "^5.2.0"
+    "chart.js": "2.9.2",
+    "opn": "^6.0.0"
   },
   "peerDependencies": {
-    "chart.js": "2.4.0"
+    "chart.js": "2.9.2"
   }
 }

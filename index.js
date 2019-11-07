@@ -4,7 +4,7 @@ const EventEmitter = require('events')
 const { promisify } = require('util')
 
 const { JSDOM } = require('jsdom')
-const Canvas = require('canvas')
+const { Context2d } = require('canvas')
 
 // resolve peer dependancy
 const chartJSPath = path.dirname(require.resolve('chart.js'))
@@ -39,7 +39,7 @@ class ChartJs extends EventEmitter {
     })
 
     this.window = window
-    this.window.CanvasRenderingContext2D = Canvas.Context2d
+    this.window.CanvasRenderingContext2D = Context2d
     this.canvas = this.window.document.getElementById('myChart')
     this.ctx = this.canvas.getContext('2d')
   }
@@ -76,7 +76,7 @@ class ChartJs extends EventEmitter {
       }
     }
 
-    this._chart = this.window.Chart(this.ctx, this.chartConfig)
+    this._chart = new this.window.Chart(this.ctx, this.chartConfig)
 
     return this
   }
@@ -94,7 +94,7 @@ class ChartJs extends EventEmitter {
         const reader = new this.window.FileReader()
 
         reader.onload = function (){
-          const buffer = new Buffer(reader.result)
+          const buffer = Buffer.from(reader.result)
           resolve(buffer)
         }
 
