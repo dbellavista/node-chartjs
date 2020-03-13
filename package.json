@@ -1,13 +1,13 @@
 {
   "name": "node-chartjs-v12",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Chart.js on the server in Node.js",
   "engines": {
     "node": ">=10.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jacktuck/node-chartjs.git"
+    "url": "https://github.com/dbellavista/node-chartjs"
   },
   "keywords": [
     "chart.js",
@@ -25,14 +25,14 @@
   "author": "Jack Tuck",
   "license": "MIT",
   "dependencies": {
-    "canvas": "2.6.0",
-    "jsdom": "^15.2.1"
+    "canvas": "2.6.1",
+    "jsdom": "^16.2.1"
   },
   "devDependencies": {
-    "chart.js": "2.9.2",
+    "chart.js": "2.9.3",
     "opn": "^6.0.0"
   },
   "peerDependencies": {
-    "chart.js": "2.9.2"
+    "chart.js": "2.9.3"
   }
 }

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const EventEmitter = require("events");
+const { EventEmitter } = require("events");
 const { promisify } = require("util");
 
 const { JSDOM } = require("jsdom");
