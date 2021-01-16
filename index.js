@@ -1,10 +1,12 @@
+'use strict';
+
 const fs = require("fs");
+const fsPr = require("fs").promises;
 const path = require("path");
 const { EventEmitter } = require("events");
-const { promisify } = require("util");
 
 const { JSDOM } = require("jsdom");
-const { Context2d } = require("canvas");
+const { CanvasRenderingContext2D } = require("canvas");
 
 function readPlugin(filePath) {
   return fs.readFileSync(filePath, "utf-8");
@@ -51,17 +53,13 @@ class ChartJs extends EventEmitter {
     </html>`;
 
     const { window } = new JSDOM(html, {
-      features: {
-        FetchExternalResources: ["script"],
-        ProcessExternalResources: ["script"],
-        SkipExternalResources: false
-      },
       runScripts: "dangerously"
     });
 
     this.window = window;
-    this.window.CanvasRenderingContext2D = Context2d;
-    this.canvas = this.window.document.getElementById("myChart");
+    this.window.CanvasRenderingContext2D = CanvasRenderingContext2D;
+    
+    this.canvas = /** @type {HTMLCanvasElement} */ (this.window.document.getElementById("myChart"));
     this.ctx = this.canvas.getContext("2d");
   }
 
@@ -106,10 +104,15 @@ class ChartJs extends EventEmitter {
   }
 
   toBlob(mime) {
-    const toBlobRearg = (mime, cb) =>
-      this.canvas.toBlob((blob, err) => cb(err, blob), mime);
-
-    return promisify(toBlobRearg)(mime);
+    return new Promise((resolve, reject) => {
+      this.canvas.toBlob((blob, err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(blob);
+        }
+      }, mime);
+    });
   }
 
   toBuffer(mime = "image/png") {
@@ -129,9 +132,7 @@ class ChartJs extends EventEmitter {
   }
 
   toFile(path, mime = "image/png") {
-    const writeFile = promisify(fs.writeFile);
-
-    return this.toBuffer(mime).then(blob => writeFile(path, blob, "binary"));
+    return this.toBuffer(mime).then(blob => fsPr.writeFile(path, blob, "binary"));
   }
 }
 
