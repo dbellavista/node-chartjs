@@ -122,7 +122,7 @@ class ChartJs extends EventEmitter {
           const reader = new this.window.FileReader();
 
           reader.onload = function() {
-            const buffer = Buffer.from(reader.result);
+            const buffer = Buffer.from(/** @type {ArrayBuffer} */(reader.result));
             resolve(buffer);
           };
 
